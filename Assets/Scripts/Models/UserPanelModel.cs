@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class UserPanelModel
 {
@@ -8,30 +7,5 @@ public class UserPanelModel
    private float _xOffset;
    private float _yOffset;
 
-   public Action<float, float, float, float> ParametersEvent;
-
-   public void Init()
-   {
-      SubscribeEvents();
-   }
-
-   private void SubscribeEvents()
-   {
-      ParametersEvent += OnParametersChanged;
-   }
    
-   private void UnsubscribeEvents()
-   {
-      ParametersEvent -= OnParametersChanged;
-   }
-
-   public void OnParametersChanged(float speedMoving, float speedSpawning, float xOffset, float yOffset)
-   {
-      _speedMoving = speedMoving;
-      _speedSpawning = speedSpawning;
-      _xOffset = xOffset;
-      _yOffset = yOffset;
-      Debug.Log(_speedMoving);
-      
-   }
 }

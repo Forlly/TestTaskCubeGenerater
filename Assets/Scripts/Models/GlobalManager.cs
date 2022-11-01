@@ -1,3 +1,4 @@
+using System;
 using Models;
 using UnityEngine;
 using Views;
@@ -11,5 +12,10 @@ public class GlobalManager : MonoBehaviour
         _gameModel = new GameModel();
         _gameModel.Init();
         _viewManager.Init(_gameModel);
+    }
+
+    private void OnDisable()
+    {
+        _gameModel.EndModel();
     }
 }

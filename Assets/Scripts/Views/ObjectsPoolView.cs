@@ -1,10 +1,12 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Models;
 using UnityEngine;
 
 public class ObjectsPoolView : MonoBehaviour
 {
     public static ObjectsPoolView Instance;
+    public Action GetPooledObjectEvent;
 
     private List<GameObject> _poolObjects = new List<GameObject>();
     [SerializeField] private int _amountPool = 30;

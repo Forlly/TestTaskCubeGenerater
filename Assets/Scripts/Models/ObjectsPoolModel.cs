@@ -1,27 +1,29 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Views;
 
 public class ObjectsPoolModel
 {
     public static ObjectsPoolModel Instance;
 
     private List<PoolList> _poolObjects = new List<PoolList>();
-    private int _amountPool = 30;
+    private int _amountPool = 128;
 
     private bool _isFull = false;
+    private ObjectsPoolView _objectsPoolView;
 
     public void Init()
     {
         Instance = this;
+        _objectsPoolView = ViewManager.Instance._objectsPoolView;
 
         for (int i = 0; i < _amountPool; i++)
         {
             PoolList tmpUnit = new PoolList();
             _poolObjects.Add(tmpUnit);
-            Debug.Log(_poolObjects[i]._unit);
         }
     }
-
 
     public IUnit GetPooledObject()
     {
@@ -29,6 +31,7 @@ public class ObjectsPoolModel
         {
             if (unit._isFree)
             {
+                unit._isFree = false;
                 return unit._unit;
             }
             _isFull = true;
@@ -48,9 +51,10 @@ public class ObjectsPoolModel
         {
             if (unit._unit == _unit)
             {
-                unit._isFree = false;
+                unit._unit.ResetCurrentPosition();
+                unit._isFree = true;
+                Debug.Log(  unit._isFree );
             }
-            _isFull = true;
         }
     }
 

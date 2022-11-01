@@ -9,7 +9,7 @@ namespace Views
         public static ViewManager Instance;
         
         [SerializeField] private UserPanelView _userPanelView;
-        [SerializeField] private ObjectsPoolView _objectsPoolView;
+        [SerializeField] public ObjectsPoolView _objectsPoolView;
         
         private void Awake()
         {
