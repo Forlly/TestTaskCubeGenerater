@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectsPool : MonoBehaviour
+public class ObjectsPoolView : MonoBehaviour
 {
-    public static ObjectsPool Instance;
+    public static ObjectsPoolView Instance;
 
     private List<GameObject> _poolObjects = new List<GameObject>();
     [SerializeField] private int _amountPool = 30;
@@ -11,7 +12,7 @@ public class ObjectsPool : MonoBehaviour
 
     private bool _isFull = false;
 
-    private void Awake()
+    public void Init()
     {
         Instance = this;
 
@@ -60,6 +61,7 @@ public class ObjectsPool : MonoBehaviour
     private GameObject CreateNewObject()
     {
         GameObject tmpObj = Instantiate(_spawnObjct);
+        _amountPool++;
         tmpObj.SetActive(true);
         _poolObjects.Add(tmpObj);
         return tmpObj;

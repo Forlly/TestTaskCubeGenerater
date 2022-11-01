@@ -27,6 +27,11 @@ public class UserPanelModel
 
    public void OnParametersChanged(float speedMoving, float speedSpawning, float xOffset, float yOffset)
    {
-      Debug.Log(speedMoving);
+      _speedMoving = speedMoving;
+      _speedSpawning = speedSpawning;
+      _xOffset = xOffset;
+      _yOffset = yOffset;
+      Debug.Log(_speedMoving);
+      
    }
 }
