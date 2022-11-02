@@ -31,8 +31,13 @@ public class ObjectsPoolModel
         {
             if (unit._isFree)
             {
-                unit._isFree = false;
-                return unit._unit;
+                if (_objectsPoolView.getPooledObjectEvent != null)
+                {
+                    unit._isFree = false;
+
+                    _objectsPoolView.getPooledObjectEvent(unit._unit.CurrentPosition, unit._unit);
+                    return unit._unit;
+                }
             }
             _isFull = true;
         }
@@ -51,9 +56,9 @@ public class ObjectsPoolModel
         {
             if (unit._unit == _unit)
             {
+                _objectsPoolView.turnOfObjectEvent(unit._unit);
                 unit._unit.ResetCurrentPosition();
                 unit._isFree = true;
-                Debug.Log(  unit._isFree );
             }
         }
     }

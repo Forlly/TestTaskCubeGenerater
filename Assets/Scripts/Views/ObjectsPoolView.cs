@@ -6,9 +6,13 @@ using UnityEngine;
 public class ObjectsPoolView : MonoBehaviour
 {
     public static ObjectsPoolView Instance;
-    public Action GetPooledObjectEvent;
+    public delegate UnitView GetPooledObjectEvent(Vector3 spawnPos, IUnit cubeController);
+    public GetPooledObjectEvent getPooledObjectEvent;
+    
+    public delegate void TurnOfObjectEvent(IUnit unit);
+    public TurnOfObjectEvent turnOfObjectEvent;
 
-    private List<GameObject> _poolObjects = new List<GameObject>();
+    private List<UnitView> _poolObjects = new List<UnitView>();
     [SerializeField] private int _amountPool = 30;
     [SerializeField] private GameObject _spawnObjct;
 
@@ -22,18 +26,24 @@ public class ObjectsPoolView : MonoBehaviour
         {
             GameObject tmpObj = Instantiate(_spawnObjct);
             tmpObj.SetActive(false);
-            _poolObjects.Add(tmpObj);
+            _poolObjects.Add(tmpObj.GetComponent<UnitView>());
         }
+
+        getPooledObjectEvent = GetPooledObject;
+        turnOfObjectEvent = TurnOfObject;
     }
 
 
-    public GameObject GetPooledObject()
+    public UnitView GetPooledObject(Vector3 spawnPosition, IUnit unit)
     {
         for (int i = 0; i < _amountPool; i++)
         {
-            if (!_poolObjects[i].activeInHierarchy)
+            if (!_poolObjects[i].gameObject.activeInHierarchy)
             {
-                _poolObjects[i].SetActive(true);
+                _poolObjects[i].gameObject.SetActive(true);
+                _poolObjects[i].Unit = unit;
+
+                Debug.Log(_poolObjects[i].Unit);
                 return _poolObjects[i];
             }
 
@@ -42,30 +52,36 @@ public class ObjectsPoolView : MonoBehaviour
 
         if (_isFull)
         {
-            return CreateNewObject();
+            return CreateNewObject(unit);
         }
 
         return null;
     }
 
-    public void TurnOfObject(GameObject obj)
+    public void TurnOfObject(IUnit unit)
     {
+       
         for (int i = 0; i < _amountPool; i++)
         {
-            if (obj == _poolObjects[i])
+            if (unit == _poolObjects[i].Unit)
             {
-                _poolObjects[i].SetActive(false);
+                _poolObjects[i].gameObject.SetActive(false);
+                Debug.Log(  "Is correct" );
             }
 
         }
     }
 
-    private GameObject CreateNewObject()
+    private UnitView CreateNewObject(IUnit unit)
     {
         GameObject tmpObj = Instantiate(_spawnObjct);
+        tmpObj.gameObject.SetActive(true);
+        
         _amountPool++;
-        tmpObj.SetActive(true);
-        _poolObjects.Add(tmpObj);
-        return tmpObj;
+        
+        tmpObj.GetComponent<UnitView>().Unit = unit;
+        _poolObjects.Add(tmpObj.GetComponent<UnitView>());
+        
+        return tmpObj.GetComponent<UnitView>();
     }
 }

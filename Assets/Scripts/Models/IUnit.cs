@@ -5,25 +5,23 @@ public abstract class IUnit
 {
     public float SpeedMoving;
     public Vector3 TargetPosition;
-    private Vector3 _currentPosition = Vector3.zero;
+    public Vector3 CurrentPosition = Vector3.zero;
 
     public virtual bool Move()
     {
-        _currentPosition = Vector3.MoveTowards(_currentPosition, TargetPosition, SpeedMoving);
+        CurrentPosition = Vector3.MoveTowards(CurrentPosition, TargetPosition, SpeedMoving);
         
-        if (Vector3.Distance(_currentPosition,TargetPosition) < 0.01f)
+        if (Vector3.Distance(CurrentPosition,TargetPosition) < 0.01f)
         {
-            _currentPosition = TargetPosition;
+            CurrentPosition = TargetPosition;
             return false;
         }
         
-        Debug.Log("CURRENT POS");
-        Debug.Log(_currentPosition);
         return true;
     }
 
     public virtual void ResetCurrentPosition()
     {
-        _currentPosition = Vector3.zero;
+        CurrentPosition = Vector3.zero;
     }
 }

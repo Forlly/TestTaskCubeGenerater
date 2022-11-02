@@ -23,7 +23,8 @@ namespace Models
         public async void Init()
         {
             _speedMoving = 1f;
-            _spawningDelay = 2000;
+            _spawningDelay = 4000;
+            _currentSpawningDelay = _spawningDelay;
             _xOffset = 10f;
             _yOffset = 10f;
             
@@ -40,7 +41,7 @@ namespace Models
             
             while (_onSimulation)
             {
-                TrySpawnObjects(_spawningDelay);
+                TrySpawnObjects(msec);
                 
                 foreach (IUnit unit in _units.Reverse<IUnit>())
                 {
@@ -89,7 +90,7 @@ namespace Models
         private void TrySpawnObjects(int msec)
         {
             _currentSpawningDelay += msec;
-            
+
             if (_spawningDelay <= _currentSpawningDelay)
             {
                 _currentSpawningDelay -= _spawningDelay;
@@ -104,6 +105,7 @@ namespace Models
         public void EndModel()
         {
             UnsubscribeEvents();
+            _onSimulation = false;
         }
         
     }
