@@ -1,4 +1,3 @@
-using System;
 using Models;
 using UnityEngine;
 using Views;

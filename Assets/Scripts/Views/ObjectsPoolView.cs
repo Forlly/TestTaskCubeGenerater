@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Models;
 using UnityEngine;
 
 public class ObjectsPoolView : MonoBehaviour
@@ -42,8 +40,7 @@ public class ObjectsPoolView : MonoBehaviour
             {
                 _poolObjects[i].gameObject.SetActive(true);
                 _poolObjects[i].Unit = unit;
-
-                Debug.Log(_poolObjects[i].Unit);
+                
                 return _poolObjects[i];
             }
 
@@ -66,7 +63,6 @@ public class ObjectsPoolView : MonoBehaviour
             if (unit == _poolObjects[i].Unit)
             {
                 _poolObjects[i].gameObject.SetActive(false);
-                Debug.Log(  "Is correct" );
             }
 
         }

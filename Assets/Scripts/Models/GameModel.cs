@@ -32,7 +32,7 @@ namespace Models
             
             ObjectsPoolModel = new ObjectsPoolModel();
             ObjectsPoolModel.Init();
-            await Tick(50);
+            await Tick(10);
         }
 
         public async Task Tick(int msec)
@@ -82,7 +82,7 @@ namespace Models
         {
             foreach (IUnit unit in _units)
             {
-                unit.TargetPosition = new Vector3(_xOffset, _yOffset, 0);
+                unit.TargetPosition = new Vector3(_xOffset, _yOffset, 1);
                 unit.SpeedMoving = _speedMoving;
             }
         }
@@ -96,8 +96,10 @@ namespace Models
                 _currentSpawningDelay -= _spawningDelay;
                 
                 IUnit unit = ObjectsPoolModel.GetPooledObject();
-                unit.TargetPosition = new Vector3(_xOffset, _yOffset, 0);
+                
+                unit.TargetPosition = new Vector3(_xOffset, _yOffset, 1);
                 unit.SpeedMoving = _speedMoving;
+                
                 _units.Add(unit);
             }
         }

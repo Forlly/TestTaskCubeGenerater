@@ -1,3 +1,4 @@
+using System;
 using Models;
 using TMPro;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class UserPanelView : MonoBehaviour
                 && float.TryParse(_xOffsetField.text, out xOffset) 
                 && float.TryParse(_yOffsetField.text, out yOffset))
             {
-                _gameModel.ParametersEvent?.Invoke(speedMoving, speedSpawning * 1000, xOffset, yOffset);
+                _gameModel.ParametersEvent?.Invoke(Math.Abs(speedMoving), speedSpawning, xOffset, yOffset);
             }
         }));
     }
