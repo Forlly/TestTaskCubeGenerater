@@ -22,9 +22,5 @@ public class UnitView : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(currentPosition, targetPosition, speedMoving);
         
-        if (Vector3.Distance(currentPosition,targetPosition) < 0.01f)
-        {
-            transform.position = targetPosition;
-        }
     }
 }

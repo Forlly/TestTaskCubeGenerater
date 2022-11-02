@@ -22,11 +22,11 @@ namespace Models
         
         public async void Init()
         {
-            _speedMoving = 1f;
-            _spawningDelay = 4000;
+            _speedMoving = 0.1f;
+            _spawningDelay = 2000;
             _currentSpawningDelay = _spawningDelay;
-            _xOffset = 10f;
-            _yOffset = 10f;
+            _xOffset = 20f;
+            _yOffset = 0f;
             
             SubscribeEvents();
             
@@ -66,6 +66,26 @@ namespace Models
         private void UnsubscribeEvents()
         {
             ParametersEvent -= OnParametersChanged;
+        }
+
+        public string GetSpeedMoving()
+        {
+            return _speedMoving.ToString();
+        }
+        
+        public string GetYOffset()
+        {
+            return _yOffset.ToString();
+        }
+        
+        public string GetXOffset()
+        {
+            return _xOffset.ToString();
+        }
+        
+        public string GetSpeedSpawning()
+        {
+            return _spawningDelay.ToString();
         }
 
         public void OnParametersChanged(float speedMoving, int speedSpawning, float xOffset, float yOffset)
