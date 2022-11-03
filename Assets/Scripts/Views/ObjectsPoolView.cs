@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Models;
 using UnityEngine;
 
 public class ObjectsPoolView : MonoBehaviour
@@ -11,14 +12,15 @@ public class ObjectsPoolView : MonoBehaviour
     public TurnOfObjectEvent turnOfObjectEvent;
 
     private List<UnitView> _poolObjects = new List<UnitView>();
-    [SerializeField] private int _amountPool = 30;
+    [SerializeField] private int _amountPool = 128;
     [SerializeField] private GameObject _spawnObjct;
 
     private bool _isFull = false;
 
-    public void Init()
+    public void Init(GameModel gameModel)
     {
         Instance = this;
+        _amountPool = gameModel.AmountPool;
 
         for (int i = 0; i < _amountPool; i++)
         {

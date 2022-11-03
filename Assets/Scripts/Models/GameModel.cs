@@ -8,6 +8,7 @@ namespace Models
 {
     public class GameModel
     {
+        public int AmountPool;
         public ObjectsPoolModel ObjectsPoolModel;
         public Action<float, int, float, float> ParametersEvent;
         
@@ -27,11 +28,13 @@ namespace Models
             _currentSpawningDelay = _spawningDelay;
             _xOffset = 20f;
             _yOffset = 0f;
+
+            AmountPool = 128;
             
             SubscribeEvents();
             
             ObjectsPoolModel = new ObjectsPoolModel();
-            ObjectsPoolModel.Init();
+            ObjectsPoolModel.Init(this);
             await Tick(10);
         }
 

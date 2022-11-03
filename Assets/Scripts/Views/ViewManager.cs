@@ -19,7 +19,7 @@ namespace Views
         public void Init(GameModel gameModel)
         {
             _userPanelView.Init(gameModel);
-            _objectsPoolView.Init();
+            _objectsPoolView.Init(gameModel);
         }
         
     }

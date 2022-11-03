@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Models;
 using Views;
 
 public class ObjectsPoolModel
@@ -11,9 +12,10 @@ public class ObjectsPoolModel
     private bool _isFull = false;
     private ObjectsPoolView _objectsPoolView;
 
-    public void Init()
+    public void Init(GameModel gameModel)
     {
         Instance = this;
+        _amountPool = gameModel.AmountPool;
         _objectsPoolView = ViewManager.Instance._objectsPoolView;
 
         for (int i = 0; i < _amountPool; i++)
