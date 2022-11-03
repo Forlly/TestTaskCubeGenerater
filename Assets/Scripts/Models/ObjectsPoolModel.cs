@@ -35,7 +35,7 @@ public class ObjectsPoolModel
                 {
                     unit._isFree = false;
 
-                    _objectsPoolView.getPooledObjectEvent(unit._unit.CurrentPosition, unit._unit);
+                    _objectsPoolView.getPooledObjectEvent(unit._unit);
                     return unit._unit;
                 }
             }

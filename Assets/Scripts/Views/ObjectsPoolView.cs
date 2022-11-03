@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectsPoolView : MonoBehaviour
 {
     public static ObjectsPoolView Instance;
-    public delegate UnitView GetPooledObjectEvent(Vector3 spawnPos, IUnit cubeController);
+    public delegate UnitView GetPooledObjectEvent(IUnit cubeController);
     public GetPooledObjectEvent getPooledObjectEvent;
     
     public delegate void TurnOfObjectEvent(IUnit unit);
@@ -34,7 +34,7 @@ public class ObjectsPoolView : MonoBehaviour
     }
 
 
-    public UnitView GetPooledObject(Vector3 spawnPosition, IUnit unit)
+    public UnitView GetPooledObject(IUnit unit)
     {
         for (int i = 0; i < _amountPool; i++)
         {
