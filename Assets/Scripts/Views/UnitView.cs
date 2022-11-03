@@ -4,7 +4,7 @@ using UnityEngine;
 public class UnitView : MonoBehaviour
 {
     private IUnit unit;
-    public Action<Vector3, Vector3, float> MoveEvent;
+    public Action<Vector3> MoveEvent;
 
     public IUnit Unit
     {
@@ -18,9 +18,9 @@ public class UnitView : MonoBehaviour
     }
     
 
-    public void Move(Vector3 currentPosition, Vector3 targetPosition, float speedMoving)
+    public void Move(Vector3 targetPosition)
     {
-        transform.position = Vector3.MoveTowards(currentPosition, targetPosition, speedMoving);
+        transform.position = targetPosition;
         
     }
 }

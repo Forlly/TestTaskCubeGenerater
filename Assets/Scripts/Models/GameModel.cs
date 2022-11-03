@@ -16,7 +16,7 @@ namespace Models
         private float _xOffset;
         private float _yOffset;
 
-        private List<IUnit> _units = new List<IUnit>();
+        private List<IUnit> _unitsOnScreen = new List<IUnit>();
         private bool _onSimulation;
         private int _currentSpawningDelay;
         
@@ -43,12 +43,12 @@ namespace Models
             {
                 TrySpawnObjects(msec);
                 
-                foreach (IUnit unit in _units.Reverse<IUnit>())
+                foreach (IUnit unit in _unitsOnScreen.Reverse<IUnit>())
                 {
                     if (!unit.Move())
                     {
                         ObjectsPoolModel.TurnOfObject(unit);
-                        _units.Remove(unit);
+                        _unitsOnScreen.Remove(unit);
                     }
                 }
 
@@ -100,7 +100,7 @@ namespace Models
 
         private void UpdateUnitsData()
         {
-            foreach (IUnit unit in _units)
+            foreach (IUnit unit in _unitsOnScreen)
             {
                 unit.TargetPosition = new Vector3(_xOffset, _yOffset, 1);
                 unit.SpeedMoving = _speedMoving;
@@ -120,7 +120,7 @@ namespace Models
                 unit.TargetPosition = new Vector3(_xOffset, _yOffset, 1);
                 unit.SpeedMoving = _speedMoving;
                 
-                _units.Add(unit);
+                _unitsOnScreen.Add(unit);
             }
         }
 

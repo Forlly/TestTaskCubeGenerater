@@ -12,9 +12,8 @@ public abstract class IUnit
     {
         if (UnitView != null)
         {
-            UnitView.MoveEvent(CurrentPosition, TargetPosition, SpeedMoving);
             CurrentPosition = Vector3.MoveTowards(CurrentPosition, TargetPosition, SpeedMoving);
-        
+            UnitView.MoveEvent(CurrentPosition);
             if (Vector3.Distance(CurrentPosition,TargetPosition) < 0.01f)
             {
                 CurrentPosition = TargetPosition;
