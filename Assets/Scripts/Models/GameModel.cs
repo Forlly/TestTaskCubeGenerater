@@ -35,15 +35,16 @@ namespace Models
             
             ObjectsPoolModel = new ObjectsPoolModel();
             ObjectsPoolModel.Init(this);
-            await Tick(10);
+            await Tick(1);
         }
 
         public async Task Tick(int msec)
         {
             _onSimulation = true;
-            
+
             while (_onSimulation)
             {
+                Debug.Log(ObjectsPoolModel.GetPoolCount);
                 TrySpawnObjects(msec);
                 
                 foreach (IUnit unit in _unitsOnScreen.Reverse<IUnit>())

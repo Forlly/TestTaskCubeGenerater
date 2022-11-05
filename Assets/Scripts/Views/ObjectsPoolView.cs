@@ -10,12 +10,14 @@ public class ObjectsPoolView : MonoBehaviour
     
     public delegate void TurnOfObjectEvent(IUnit unit);
     public TurnOfObjectEvent turnOfObjectEvent;
+    
+    public delegate UnitView CreateNewObjectEvent(IUnit unit);
+    public CreateNewObjectEvent createNewObjectEvent;
 
     private List<UnitView> _poolObjects = new List<UnitView>();
     [SerializeField] private int _amountPool = 128;
     [SerializeField] private GameObject _spawnObjct;
-
-    private bool _isFull = false;
+    
 
     public void Init(GameModel gameModel)
     {
@@ -31,6 +33,7 @@ public class ObjectsPoolView : MonoBehaviour
 
         getPooledObjectEvent = GetPooledObject;
         turnOfObjectEvent = TurnOfObject;
+        createNewObjectEvent = CreateNewObject;
     }
 
 
@@ -45,15 +48,8 @@ public class ObjectsPoolView : MonoBehaviour
                 
                 return _poolObjects[i];
             }
-
-            _isFull = true;
+            
         }
-
-        if (_isFull)
-        {
-            return CreateNewObject(unit);
-        }
-
         return null;
     }
 
@@ -72,6 +68,7 @@ public class ObjectsPoolView : MonoBehaviour
 
     private UnitView CreateNewObject(IUnit unit)
     {
+        Debug.Log("New Object View");
         GameObject tmpObj = Instantiate(_spawnObjct);
         tmpObj.gameObject.SetActive(true);
         

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using Models;
+using UnityEngine;
 using Views;
 
 public class ObjectsPoolModel
 {
     public static ObjectsPoolModel Instance;
+    public int GetPoolCount => _poolObjects.Count;
 
     private List<PoolList> _poolObjects = new List<PoolList>();
     private int _amountPool = 128;
@@ -31,20 +33,19 @@ public class ObjectsPoolModel
         {
             if (unit._isFree)
             {
-                if (_objectsPoolView.getPooledObjectEvent != null)
-                {
-                    unit._isFree = false;
+                unit._isFree = false;
 
-                    _objectsPoolView.getPooledObjectEvent(unit._unit);
-                    return unit._unit;
-                }
+                _objectsPoolView.getPooledObjectEvent?.Invoke(unit._unit);
+                return unit._unit;
             }
             _isFull = true;
         }
 
         if (_isFull)
         {
-            return CreateNewObject();
+            IUnit newUnit = CreateNewObject();
+            _objectsPoolView.createNewObjectEvent?.Invoke(newUnit);
+            return newUnit;
         }
 
         return null;
@@ -56,7 +57,7 @@ public class ObjectsPoolModel
         {
             if (unit._unit == _unit)
             {
-                _objectsPoolView.turnOfObjectEvent(unit._unit);
+                _objectsPoolView.turnOfObjectEvent?.Invoke(unit._unit);
                 unit._unit.ResetCurrentPosition();
                 unit._isFree = true;
             }
@@ -65,6 +66,7 @@ public class ObjectsPoolModel
 
     private IUnit CreateNewObject()
     {
+        Debug.Log("New Object");
         PoolList tmpUnit = new PoolList();
         _amountPool++;
         _poolObjects.Add(tmpUnit);
