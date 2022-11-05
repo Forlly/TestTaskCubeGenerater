@@ -5,14 +5,6 @@ using UnityEngine;
 public class ObjectsPoolView : MonoBehaviour
 {
     public static ObjectsPoolView Instance;
-    public delegate UnitView GetPooledObjectEvent(IUnit cubeController);
-    public GetPooledObjectEvent getPooledObjectEvent;
-    
-    public delegate void TurnOfObjectEvent(IUnit unit);
-    public TurnOfObjectEvent turnOfObjectEvent;
-    
-    public delegate UnitView CreateNewObjectEvent(IUnit unit);
-    public CreateNewObjectEvent createNewObjectEvent;
 
     private List<UnitView> _poolObjects = new List<UnitView>();
     [SerializeField] private int _amountPool = 128;
@@ -31,9 +23,21 @@ public class ObjectsPoolView : MonoBehaviour
             _poolObjects.Add(tmpObj.GetComponent<UnitView>());
         }
 
-        getPooledObjectEvent = GetPooledObject;
-        turnOfObjectEvent = TurnOfObject;
-        createNewObjectEvent = CreateNewObject;
+        SubscribePoolEvents(gameModel);
+    }
+
+    private void SubscribePoolEvents(GameModel gameModel)
+    {
+        gameModel.ObjectsPoolModel.getPooledObjectEvent += GetPooledObject;
+        gameModel.ObjectsPoolModel.turnOfObjectEvent += TurnOfObject;
+        gameModel.ObjectsPoolModel.createNewObjectEvent += CreateNewObject;
+    }
+    
+    private void UnsubscribePoolEvents(GameModel gameModel)
+    {
+        gameModel.ObjectsPoolModel.getPooledObjectEvent -= GetPooledObject;
+        gameModel.ObjectsPoolModel.turnOfObjectEvent -= TurnOfObject;
+        gameModel.ObjectsPoolModel.createNewObjectEvent -= CreateNewObject;
     }
 
 
@@ -68,7 +72,6 @@ public class ObjectsPoolView : MonoBehaviour
 
     private UnitView CreateNewObject(IUnit unit)
     {
-        Debug.Log("New Object View");
         GameObject tmpObj = Instantiate(_spawnObjct);
         tmpObj.gameObject.SetActive(true);
         

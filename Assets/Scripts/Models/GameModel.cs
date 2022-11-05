@@ -46,7 +46,6 @@ namespace Models
 
             while (_onSimulation)
             {
-                Debug.Log(ObjectsPoolModel.GetPoolCount);
                 TrySpawnObjects(msec);
                 
                 foreach (IUnit unit in _unitsOnScreen.Reverse<IUnit>())

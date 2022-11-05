@@ -6,19 +6,24 @@ using Views;
 public class ObjectsPoolModel
 {
     public static ObjectsPoolModel Instance;
-    public int GetPoolCount => _poolObjects.Count;
+    public delegate UnitView GetPooledObjectEvent(IUnit cubeController);
+    public GetPooledObjectEvent getPooledObjectEvent;
+    
+    public delegate void TurnOfObjectEvent(IUnit unit);
+    public TurnOfObjectEvent turnOfObjectEvent;
+    
+    public delegate UnitView CreateNewObjectEvent(IUnit unit);
+    public CreateNewObjectEvent createNewObjectEvent;
 
     private List<PoolList> _poolObjects = new List<PoolList>();
     private int _amountPool = 128;
 
     private bool _isFull = false;
-    private ObjectsPoolView _objectsPoolView;
 
     public void Init(GameModel gameModel)
     {
         Instance = this;
         _amountPool = gameModel.AmountPool;
-        _objectsPoolView = ViewManager.Instance._objectsPoolView;
 
         for (int i = 0; i < _amountPool; i++)
         {
@@ -35,7 +40,7 @@ public class ObjectsPoolModel
             {
                 unit._isFree = false;
 
-                _objectsPoolView.getPooledObjectEvent?.Invoke(unit._unit);
+                getPooledObjectEvent?.Invoke(unit._unit);
                 return unit._unit;
             }
             _isFull = true;
@@ -44,7 +49,7 @@ public class ObjectsPoolModel
         if (_isFull)
         {
             IUnit newUnit = CreateNewObject();
-            _objectsPoolView.createNewObjectEvent?.Invoke(newUnit);
+            createNewObjectEvent?.Invoke(newUnit);
             return newUnit;
         }
 
@@ -57,7 +62,7 @@ public class ObjectsPoolModel
         {
             if (unit._unit == _unit)
             {
-                _objectsPoolView.turnOfObjectEvent?.Invoke(unit._unit);
+                turnOfObjectEvent?.Invoke(unit._unit);
                 unit._unit.ResetCurrentPosition();
                 unit._isFree = true;
             }
@@ -66,7 +71,7 @@ public class ObjectsPoolModel
 
     private IUnit CreateNewObject()
     {
-        Debug.Log("New Object");
+
         PoolList tmpUnit = new PoolList();
         _amountPool++;
         _poolObjects.Add(tmpUnit);
