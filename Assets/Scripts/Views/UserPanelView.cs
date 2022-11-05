@@ -36,6 +36,7 @@ public class UserPanelView : MonoBehaviour
             float speedMoving, xOffset, yOffset;
             if (float.TryParse(_speedMovingField.text, out speedMoving) 
                 && int.TryParse(_speedSpawningField.text, out speedSpawning)
+                && (int.Parse(_speedSpawningField.text) > _gameModel.TickTime)
                 && float.TryParse(_xOffsetField.text, out xOffset) 
                 && float.TryParse(_yOffsetField.text, out yOffset))
             {
@@ -48,7 +49,7 @@ public class UserPanelView : MonoBehaviour
     private void ValidateSpeedMovingInputData(string inputData)
     {
         float exampleData;
-        if (!float.TryParse(inputData, out exampleData) )
+        if (!float.TryParse(inputData, out exampleData))
         {
             _speedMovingField.image.color = new Color(1f, 0f, 0.08f, 0.54f);
         }
@@ -85,7 +86,7 @@ public class UserPanelView : MonoBehaviour
     private void ValidateSpeedSpawningInputData(string inputData)
     {
         int exampleData;
-        if (!int.TryParse(inputData, out exampleData))
+        if (!int.TryParse(inputData, out exampleData) || int.Parse(inputData) <= _gameModel.TickTime)
         {
             _speedSpawningField.image.color = new Color(1f, 0f, 0.08f, 0.54f);
         }

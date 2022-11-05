@@ -9,6 +9,7 @@ namespace Models
     public class GameModel
     {
         public int AmountPool;
+        public int TickTime;
         public ObjectsPoolModel ObjectsPoolModel;
         public Action<float, int, float, float> ParametersEvent;
         
@@ -30,12 +31,13 @@ namespace Models
             _yOffset = 0f;
 
             AmountPool = 128;
+            TickTime = 2;
             
             SubscribeEvents();
             
             ObjectsPoolModel = new ObjectsPoolModel();
             ObjectsPoolModel.Init(this);
-            await Tick(1);
+            await Tick(TickTime);
         }
 
         public async Task Tick(int msec)
@@ -98,6 +100,8 @@ namespace Models
             _spawningDelay = speedSpawning;
             _xOffset = xOffset;
             _yOffset = yOffset;
+
+            
 
             UpdateUnitsData();
         }
